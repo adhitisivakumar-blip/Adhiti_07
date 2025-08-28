@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char input[10];
+
+    printf("Enter an operator: ");
+    scanf("%s", input);
+
+    if (strlen(input) == 1) {
+        switch (input[0]) {
+            case '+':
+                printf("Valid operator: Addition (+)\n");
+                break;
+            case '-':
+                printf("Valid operator: Subtraction (-)\n");
+                break;
+            case '*':
+                printf("Valid operator: Multiplication (*)\n");
+                break;
+            case '/':
+                printf("Valid operator: Division (/)\n");
+                break;
+            default:
+                printf("Invalid operator.\n");
+        }
+    } else {
+        printf("Invalid operator.\n");
+    }
+
+    return 0;
+}
