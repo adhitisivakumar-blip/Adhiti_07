@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(void) {
+    char line[1000];
+    int whitespace_count = 0;
+    int newline_count = 0;
+
+    puts("Enter text (type a single dot '.' on a new line to finish):");
+
+    while (fgets(line, sizeof(line), stdin)) {
+        // remove trailing CR/LF
+        size_t len = strlen(line);
+        while (len > 0 && (line[len-1] == '\n' || line[len-1] == '\r')) {
+            line[--len] = '\0';
+        }
+
+        // check for sentinel: a single dot possibly surrounded by spaces
+        int start = 0;
+        while (start < (int)len && isspace((unsigned char)line[start])) start++;
+        int end = (int)len - 1;
+        while (end >= start && isspace((unsigned char)line[end])) end--;
+        if (start <= end && end - start + 1 == 1 && line[start] == '.') {
+            break; // stop and do NOT count this line
+        }
+
+        // count spaces and tabs in this line
+        for (size_t i = 0; i < len; ++i) {
+            if (line[i] == ' ' || line[i] == '\t') whitespace_count++;
+        }
+
+        // each fgets corresponds to one newline typed by the user
+        newline_count++;
+    }
+
+    printf("\nNumber of whitespaces (spaces + tabs): %d\n", whitespace_count);
+    printf("Number of newline characters: %d\n", newline_count);
+    return 0;
+}
